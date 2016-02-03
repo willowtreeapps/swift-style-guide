@@ -542,11 +542,14 @@ let colour = "red"
 
 ## Copyright Statement
 
-The following copyright statement should be included at the top of every source
-file:
+When writing client software, use their appropriate copyright notice, or the default Xcode 
+copyright.
+
+For open source WillowTree projects, the following copyright statement should be included at 
+the top of every source file and as part of a LICENSE file at the root of the system directory:
 
     /*
-     * Copyright (c) 2015 Razeware LLC
+     * Copyright (c) 2016 WillowTree, Inc.
      * 
      * Permission is hereby granted, free of charge, to any person obtaining a copy
      * of this software and associated documentation files (the "Software"), to deal
