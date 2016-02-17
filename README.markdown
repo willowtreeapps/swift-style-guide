@@ -19,7 +19,6 @@
   * [Struct Initializers](#struct-initializers)
   * [Type Inference](#type-inference)
   * [Syntactic Sugar](#syntactic-sugar)
-* [Control Flow](#control-flow)
 * [Semicolons](#semicolons)
 * [Language](#language)
 * [Copyright Statement](#copyright-statement)
@@ -476,35 +475,6 @@ var deviceModels: Array<String>
 var employees: Dictionary<Int, String>
 var faxNumber: Optional<Int>
 ```
-
-
-## Control Flow
-
-Prefer the `for-in` style of `for` loop over the `for-condition-increment` style.
-
-**Preferred:**
-```swift
-for _ in 0..<3 {
-    println("Hello three times")
-}
-
-for (index, person) in enumerate(attendeeList) {
-    println("\(person) is at position #\(index)")
-}
-```
-
-**Not Preferred:**
-```swift
-for var i = 0; i < 3; i++ {
-    println("Hello three times")
-}
-
-for var i = 0; i < attendeeList.count; i++ {
-    let person = attendeeList[i]
-    println("\(person) is at position #\(i)")
-}
-```
-
 
 ## Semicolons
 
