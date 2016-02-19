@@ -21,6 +21,7 @@
   * [Syntactic Sugar](#syntactic-sugar)
 * [Semicolons](#semicolons)
 * [Language](#language)
+* [Working with Storyboards](#storyboards)
 * [Copyright Statement](#copyright-statement)
 * [Credits](#credits)
 
@@ -508,6 +509,65 @@ let color = "red"
 **Not Preferred:**
 ```swift
 let colour = "red"
+```
+
+## Storyboards
+
+When instantiating view controllers form storyboards, it is impossible to use
+non-optional property types since the lifecycle is out of the app's direct
+control.
+
+To mitigate problems with uninitialized optionals, it is useful to put the
+normal initialization work in a helper method.
+
+- For instantiation, consider a factory method, conventionally named `build`.
+- For preparation during segue, consider a method named `prepare`.
+- Both methods should require external names for all parameters, to mimic
+  the feel of initializers.
+
+**Example `build`**
+
+```swift
+class ProfileViewController: UIViewController {
+    var user: User!
+    class func build(user user: User) -> ProfileViewController {
+        let storyboard = UIStoryboard(name: "ProfileViewController", bundle: nil)
+        let controller = storyboard.instantiateInitialViewController() as! ProfileViewController
+        controller.user = user
+        return controller
+    }
+}
+```
+
+**Example `prepare`**
+
+```swift
+class ProfileViewController: UIViewController {
+    var user: User!
+    func prepare(user user: User) {
+        self.user = user
+    }
+}
+```
+
+**Combined Example**
+
+Naturally, if a controller could be instantiated directly, or navigated to via
+a segue, the approaches should be combined:
+
+```swift
+class ProfileViewController: UIViewController {
+    var user: User!
+    class func build(user user: User) -> ProfileViewController {
+        let storyboard = UIStoryboard(name: "ProfileViewController", bundle: nil)
+        let controller = storyboard.instantiateInitialViewController() as! ProfileViewController
+        controller.prepare(user: user)
+        return controller
+    }
+    func prepare(user user: User) {
+        self.user = user
+    }
+}
 ```
 
 ## Copyright Statement
