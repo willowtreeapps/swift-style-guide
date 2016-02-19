@@ -513,8 +513,8 @@ let colour = "red"
 
 ## Storyboards
 
-When instantiating view controllers form storyboards, it is impossible to use
-non-optional property types since the lifecycle is out of the app's direct
+When instantiating view controllers from storyboards, it is impossible to use
+non-optional property types since the view controller's lifecycle is out of the app's direct
 control.
 
 To mitigate problems with uninitialized optionals, it is useful to put the
