@@ -433,12 +433,12 @@ var diameter: Double {
 Mark classes `final` when inheritance is not intended. Example:
 
 ```swift
-// Turn any generic type into a reference type using this Box class.
-final class Box<T> {
-  let value: T
-  init(_ value: T) {
-    self.value = value
-  }
+// We don't allow subclassing of an equilateral triangle
+final class EquilateralTriangle : Triangle {
+    let sideLength: Int
+    init(sideLength: Int) {
+        self.sideLength = sideLength
+    }
 }
 ```
 
@@ -543,7 +543,7 @@ You can define constants on a type rather than an instance of that type using ty
 **Preferred:**
 ```swift
 enum Math {
-  static let e  = 2.718281828459045235360287
+  static let e = 2.718281828459045235360287
   static let pi = 3.141592653589793238462643
 }
 
@@ -554,7 +554,7 @@ radius * Math.pi * 2 // circumference
 
 **Not Preferred:**
 ```swift
-let e  = 2.718281828459045235360287  // pollutes global namespace
+let e = 2.718281828459045235360287  // pollutes global namespace
 let pi = 3.141592653589793238462643
 
 radius * pi * 2 // is pi instance data or a global constant?
@@ -668,6 +668,7 @@ let maximumWidth: CGFloat = 106.5
 let message: String = "Click the button"
 let currentBounds: CGRect = computeViewBounds()
 var names: [String] = ["Mic", "Sam", "Christine"]
+let maximumWidth = CGFloat(106.5)
 ```
 
 #### Type Annotation for Empty Arrays and Dictionaries
@@ -768,7 +769,7 @@ resource.request().onComplete { [weak self] response in
 
 ## Access Control
 
-Full access control annotation in tutorials can distract from the main topic and is not required. Using `private` appropriately, however, adds clarity and promotes encapsulation. Use `private` as the leading property specifier. The only things that should come before access control are the `static` specifier or attributes such as `@IBAction` and `@IBOutlet`.
+Use `private` as the leading property specifier. The only things that should come before access control are the `static` specifier or attributes such as `@IBAction` and `@IBOutlet`.
 
 **Preferred:**
 ```swift
