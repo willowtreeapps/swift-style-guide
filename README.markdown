@@ -568,7 +568,21 @@ Static methods and type properties work similarly to global functions and global
 
 ### Optionals
 
-Declare variables and function return types as optional with `?` where a nil value is acceptable.
+Declare variables and function return types as optional with `?` where a nil value is acceptable. Use the default nil initializer when declaring optional types.
+
+**Preferred**
+```swift
+class Person {
+    var name: String?
+}
+```
+
+**Not Preferred**
+```swift
+class Person {
+    var name: String? = nil
+}
+```
 
 Use implicitly unwrapped types declared with `!` only for instance variables that you know will be initialized later before use, such as subviews that will be set up in `viewDidLoad`.
 
