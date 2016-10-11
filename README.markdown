@@ -234,7 +234,7 @@ class MyViewController: UIViewController, UITableViewDataSource, UIScrollViewDel
 }
 ```
 
-Since the compiler does not allow you to re-declare protocol conformance in a derived class, it is not always required to replicate the extension groups of the base class. This is especially true if the derived class is a terminal class and a small number of methods are being overriden. When to preserve the extension groups is left to the discretion of the author.
+Since the compiler does not allow you to re-declare protocol conformance in a derived class, it is not always required to replicate the extension groups of the base class. This is especially true if the derived class is a terminal class and a small number of methods are being overridden. When to preserve the extension groups is left to the discretion of the author.
 
 For UIKit view controllers, consider grouping lifecycle, custom accessors, and IBAction in separate class extensions.
 
@@ -242,7 +242,7 @@ For UIKit view controllers, consider grouping lifecycle, custom accessors, and I
 
 Unused (dead) code, including Xcode template code and placeholder comments should be removed.
 
-Aspirational methods not directly associated with the tutorial whose implementation simply calls the super class should also be removed. This includes any empty/unused UIApplicationDelegate methods.
+Methods whose implementation simply calls the super class should also be removed. This includes any empty/unused UIApplicationDelegate methods.
 
 **Not Preferred:**
 ```swift
@@ -404,6 +404,7 @@ class BoardLocation {
 
         let closure = {
             print(self.row)
+        }
     }
 }
 ```
@@ -666,7 +667,7 @@ let maximumWidth: CGFloat = 106.5
 ```swift
 let message: String = "Click the button"
 let currentBounds: CGRect = computeViewBounds()
-let names = [String]()
+var names: [String] = ["Mic", "Sam", "Christine"]
 ```
 
 #### Type Annotation for Empty Arrays and Dictionaries
@@ -908,8 +909,6 @@ let swift = "not a scripting language"
 ```swift
 let swift = "not a scripting language";
 ```
-
-**NOTE**: Swift is very different from JavaScript, where omitting semicolons is [generally considered unsafe](http://stackoverflow.com/questions/444080/do-you-recommend-using-semicolons-after-every-statement-in-javascript)
 
 ## Parentheses
 
