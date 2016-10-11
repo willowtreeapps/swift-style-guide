@@ -342,7 +342,7 @@ If you are developing a framework or reusable component, it is preferable to add
 public static func decode(json: AnyObject) throws -> Person {}
 ```
 
-Care should be taken to make the comments meaningful and add additional information or clarity than what can be inferred by the function declaration. Additional documentation on the markdown style can be found [https://developer.apple.com/library/content/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html#//apple_ref/doc/uid/TP40016497-CH2-SW1](here)
+Care should be taken to make the comments meaningful and add additional information or clarity than what can be inferred by the function declaration. Additional documentation on the Markdown style can be found [here](https://developer.apple.com/library/content/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html#//apple_ref/doc/uid/TP40016497-CH2-SW1).
 
 ## Classes and Structures
 
