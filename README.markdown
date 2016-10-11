@@ -572,15 +572,17 @@ Declare variables and function return types as optional with `?` where a nil val
 
 **Preferred**
 ```swift
-class Person {
-    var name: String?
+struct Person {
+    let name: String
+    let nickname: String?
 }
 ```
 
 **Not Preferred**
 ```swift
-class Person {
-    var name: String? = nil
+struct Person {
+    let name: String
+    let nickname: String? = nil
 }
 ```
 
