@@ -542,22 +542,24 @@ You can define constants on a type rather than an instance of that type using ty
 
 **Preferred:**
 ```swift
-enum Math {
-  static let e = 2.718281828459045235360287
-  static let pi = 3.141592653589793238462643
+enum AstronomicalUnits {
+    static let c = 299792458
+    static let parsec = 3.08567758128 * pow(Double(10), Double(16))
+    static let lightYear = 9.4607304725808 * pow(Double(10), Double(15))
 }
 
-radius * Math.pi * 2 // circumference
+let kesselRun = 12 * AstronomicalUnits.parsec
 
 ```
 **Note:** The advantage of using a case-less enumeration is that it can't accidentally be instantiated and works as a pure namespace.
 
 **Not Preferred:**
 ```swift
-let e = 2.718281828459045235360287  // pollutes global namespace
-let pi = 3.141592653589793238462643
+static let c = 299792458 // pollutes global namespace
+static let parsec = 3.08567758128 * pow(Double(10), Double(16))
+static let lightYear = 9.4607304725808 * pow(Double(10), Double(15))
 
-radius * pi * 2 // is pi instance data or a global constant?
+let kesselRun = 12 * parsec // is parsec instance data or a global constant?
 ```
 
 ### Static Methods and Variable Type Properties
