@@ -640,11 +640,11 @@ Consider using lazy initialization for finer grain control over object lifetime.
 lazy var locationManager: CLLocationManager = self.makeLocationManager()
 
 private func makeLocationManager() -> CLLocationManager {
-  let manager = CLLocationManager()
-  manager.desiredAccuracy = kCLLocationAccuracyBest
-  manager.delegate = self
-  manager.requestAlwaysAuthorization()
-  return manager
+    let manager = CLLocationManager()
+    manager.desiredAccuracy = kCLLocationAccuracyBest
+    manager.delegate = self
+    manager.requestAlwaysAuthorization()
+    return manager
 }
 ```
 
@@ -740,23 +740,30 @@ Code (even non-production, tutorial demo code) should not create reference cycle
 
 ### Extending object lifetime
 
-Extend object lifetime using the `[weak self]` and `guard let strongSelf = self else { return }` idiom. `[weak self]` is preferred to `[unowned self]` where it is not immediately obvious that `self` outlives the closure. Explicitly extending lifetime is preferred to optional unwrapping.
+Extend object lifetime using the `[weak self]` and `guard let strongSelf = self else { return }` idiom. `[weak self]` is preferred to `[unowned self]` where it is not immediately obvious that `self` outlives the closure. Explicitly extending lifetime is preferred to optional unwrapping. The exception is if self is only referenced once in a single line, then optional unwrapping is preferred.
 
 **Preferred**
 ```swift
 resource.request().onComplete { [weak self] response in
-  guard let strongSelf = self else { return }
-  let model = strongSelf.updateModel(response)
-  strongSelf.updateUI(model)
+    guard let strongSelf = self else { return }
+    let model = strongSelf.updateModel(response)
+    strongSelf.updateUI(model)
 }
 ```
+
+```swift
+resource.request().onComplete { [weak self] response in
+    self?.handleResponse(response)
+}
+```
+
 
 **Not Preferred**
 ```swift
 // might crash if self is released before response returns
 resource.request().onComplete { [unowned self] response in
-  let model = self.updateModel(response)
-  self.updateUI(model)
+    let model = self.updateModel(response)
+    self.updateUI(model)
 }
 ```
 
@@ -764,8 +771,8 @@ resource.request().onComplete { [unowned self] response in
 ```swift
 // deallocate could happen between updating the model and updating UI
 resource.request().onComplete { [weak self] response in
-  let model = self?.updateModel(response)
-  self?.updateUI(model)
+    let model = self?.updateModel(response)
+    self?.updateUI(model)
 }
 ```
 
@@ -776,14 +783,14 @@ Use `private` as the leading property specifier. The only things that should com
 **Preferred:**
 ```swift
 class TimeMachine {  
-  private dynamic lazy var fluxCapacitor = FluxCapacitor()
+    private dynamic lazy var fluxCapacitor = FluxCapacitor()
 }
 ```
 
 **Not Preferred:**
 ```swift
 class TimeMachine {  
-  lazy dynamic private var fluxCapacitor = FluxCapacitor()
+    lazy dynamic private var fluxCapacitor = FluxCapacitor()
 }
 ```
 
@@ -794,19 +801,19 @@ Prefer the `for-in` style of `for` loop over the `while-condition-increment` sty
 **Preferred:**
 ```swift
 for _ in 0..<3 {
-  print("Hello three times")
+    print("Hello three times")
 }
 
 for (index, person) in attendeeList.enumerate() {
-  print("\(person) is at position #\(index)")
+    print("\(person) is at position #\(index)")
 }
 
 for index in 0.stride(to: items.count, by: 2) {
-  print(index)
+    print(index)
 }
 
 for index in (0...3).reverse() {
-  print(index)
+    print(index)
 }
 ```
 
@@ -814,16 +821,16 @@ for index in (0...3).reverse() {
 ```swift
 var i = 0
 while i < 3 {
-  print("Hello three times")
-  i += 1
+    print("Hello three times")
+    i += 1
 }
 
 
 var i = 0
 while i < attendeeList.count {
-  let person = attendeeList[i]
-  print("\(person) is at position #\(i)")
-  i += 1
+    let person = attendeeList[i]
+    print("\(person) is at position #\(i)")
+    i += 1
 }
 ```
 ## Golden Path
@@ -834,12 +841,12 @@ When coding with conditionals, the left hand margin of the code should be the "g
 ```swift
 func computeFFT(context: Context?, inputData: InputData?) throws -> Frequencies {
 
-  guard let context = context else { throw FFTError.noContext }
-  guard let inputData = inputData else { throw FFTError.noInputData }
+    guard let context = context else { throw FFTError.noContext }
+    guard let inputData = inputData else { throw FFTError.noInputData }
 
-  // use context and input to compute the frequencies
+    // use context and input to compute the frequencies
 
-  return frequencies
+    return frequencies
 }
 ```
 
@@ -847,19 +854,19 @@ func computeFFT(context: Context?, inputData: InputData?) throws -> Frequencies 
 ```swift
 func computeFFT(context: Context?, inputData: InputData?) throws -> Frequencies {
 
-  if let context = context {
-    if let inputData = inputData {
-      // use context and input to compute the frequencies
+    if let context = context {
+        if let inputData = inputData {
+            // use context and input to compute the frequencies
 
-      return frequencies
+            return frequencies
+        }
+        else {
+            throw FFTError.noInputData
+        }
     }
     else {
-      throw FFTError.noInputData
+        throw FFTError.noContext
     }
-  }
-  else {
-    throw FFTError.noContext
-  }
 }
 ```
 
@@ -874,17 +881,17 @@ guard let number1 = number1, number2 = number2, number3 = number3 else { fatalEr
 **Not Preferred:**
 ```swift
 if let number1 = number1 {
-  if let number2 = number2 {
-    if let number3 = number3 {
-      // do something with numbers
+    if let number2 = number2 {
+        if let number3 = number3 {
+            // do something with numbers
+        }
+        else {
+            fatalError("impossible")
+        }
     }
     else {
-      fatalError("impossible")
+        fatalError("impossible")
     }
-  }
-  else {
-    fatalError("impossible")
-  }
 }
 else {
   fatalError("impossible")
@@ -920,14 +927,14 @@ Parentheses around conditionals are not required and should be omitted.
 **Preferred:**
 ```swift
 if name == "Hello" {
-  print("World")
+    print("World")
 }
 ```
 
 **Not Preferred:**
 ```swift
 if (name == "Hello") {
-  print("World")
+    print("World")
 }
 ```
 
