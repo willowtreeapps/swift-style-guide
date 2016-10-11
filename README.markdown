@@ -514,6 +514,22 @@ let value = numbers
    .map {$0 + 10}
 ```
 
+Empty closures should be defined using the ```() -> Void``` declaration.
+
+**Preferred:**
+```swift
+func performInBackground(activity: @escaping () -> Void)
+```
+
+**Not Preferred:**
+
+```swift
+func performInBackground(activity: @escaping () -> ())
+
+func performInBackground(activity: @escaping Void -> Void)
+
+```
+
 ## Types
 
 Always use Swift's native types when available. Swift offers bridging to Objective-C so you can still use the full set of methods as needed.
