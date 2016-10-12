@@ -30,6 +30,7 @@
   * [Optionals](#optionals)
   * [Struct Initializers](#struct-initializers)
   * [Lazy Initialization](#lazy-initialization)
+  * [OptionSetTypes](#optionsettypes)
   * [Type Inference](#type-inference)
   * [Syntactic Sugar](#syntactic-sugar)
 * [Working with Storyboards](#storyboards)
@@ -668,6 +669,33 @@ private func makeLocationManager() -> CLLocationManager {
   - `[unowned self]` is not required here. A retain cycle is not created.
   - Location manager has a side-effect for popping up UI to ask the user for permission so fine grain control makes sense here.
 
+### OptionSetTypes
+
+When using OptionSetTypes, signify the "no" option using an empty array literal rather than the rawValue initializer. For example, given:
+
+```swift
+struct PackagingOptions : OptionSetType {
+    let rawValue: Int
+    init(rawValue: Int) { self.rawValue = rawValue }
+    static let box = PackagingOptions(rawValue: 1)
+    static let carton = PackagingOptions(rawValue: 2)
+}
+
+let options: PackagingOptions = [.box]
+func placeOrder(orderId: String, options: PackagingOptions) { ... }
+```
+
+**Preferred:**
+
+```swift
+placeOrder("1234", options: [])
+```
+
+**Not Preferred:**
+
+```swift
+placeOrder("1234", options: PackagingOptions(rawValue: 0))
+```
 
 ### Type Inference
 
