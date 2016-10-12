@@ -39,6 +39,7 @@
   * [Extending Lifetime](#extending-lifetime)
 * [Access Control](#access-control)
 * [Control Flow](#control-flow)
+* [Third Party Imports](#third-party-imports)
 * [Golden Path](#golden-path)
   * [Failing Guards](#failing-guards)
 * [Semicolons](#semicolons)
@@ -877,6 +878,29 @@ while i < attendeeList.count {
     i += 1
 }
 ```
+
+## Third Party Imports
+
+Third party libraries that have yet to annotate their Objective-C headers for nullability will be imported into Swift with implicitly unwrapped optionals. These should be treated as optionals and guarded on use as any other optional parameter. For example, an Objective-C class imported into Swift might look like:
+
+```swift
+open class ThirdPartyDelegate : NSObject {
+    open func onError(errorInfo: ErrorInfo!)
+}
+```
+
+An overriding subclass should instead treat implicitly unwrapped optional parameters as optionals.
+
+```swift
+open class MyDelegate: ThirdPartyDelegate {
+    override open func onError(errorInfo: ErrorInfo?) {
+        logger.error("[ERROR] ThirdPartyDelegate: \(errorInfo?.message)")
+    }
+}
+```
+
+Specifically, the imported type ```ErrorInfo!``` has been changed to ```ErrorInfo?```
+
 ## Golden Path
 
 When coding with conditionals, the left hand margin of the code should be the "golden" or "happy" path. That is, don't nest `if` statements. Multiple return statements are OK. The `guard` statement is built for this.
