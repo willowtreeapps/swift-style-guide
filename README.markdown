@@ -330,6 +330,21 @@ When they are needed, use comments to explain **why** a particular piece of code
 
 Avoid block comments inline with code, as the code should be as self-documenting as possible. *Exception: This does not apply to those comments used to generate documentation.*
 
+If you are developing a framework or reusable component, it is preferable to add the Xcode Markdown style comments to public functions and classes. This enables the Quick Help functionality for other developers, which can be helpful during integration of frameworks. Either the triple slash ```///``` style comments or the ```/**``` comment styles can be used for the block comments, but the triple slash is generally preferred as this is the style Xcode uses in the "Add Documentation" command that can be found under Editor -> Structure -> Add Documentation
+
+```swift
+/// Decodes a JSON payload from the API into the corresponding Person model object. The JSON
+/// payload must contain the following keys: name, birthDate, age.
+///
+/// - parameter json: JSON payload from the /persons endpoint
+///
+/// - throws: MissingKeyException on a missing required key
+///
+/// - returns: the JSON populated Person object
+public static func decode(json: AnyObject) throws -> Person {}
+```
+
+Care should be taken to make the comments meaningful and add additional information or clarity than what can be inferred by the function declaration. Additional documentation on the Markdown style can be found [here](https://developer.apple.com/library/content/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html#//apple_ref/doc/uid/TP40016497-CH2-SW1).
 
 ## Classes and Structures
 
