@@ -32,7 +32,7 @@
      * [Optionals](#optionals)
      * [Struct Initializers](#struct-initializers)
      * [Lazy Initialization](#lazy-initialization)
-     * [OptionSetTypes](#optionsettypes)
+     * [OptionSets](#optionsets)
      * [Type Inference](#type-inference)
      * [Syntactic Sugar](#syntactic-sugar)
 * [Working with Storyboards](#storyboards)
@@ -41,6 +41,7 @@
      * [Extending Lifetime](#extending-lifetime)
 * [Access Control](#access-control)
 * [Control Flow](#control-flow)
+* [Third Party Imports](#third-party-imports)
 * [Golden Path](#golden-path)
      * [Failing Guards](#failing-guards)
 * [Semicolons](#semicolons)
@@ -336,8 +337,32 @@ class TestDatabaseNotPreferred : Database {
 
 When they are needed, use comments to explain **why** a particular piece of code does something. Comments must be kept up-to-date or deleted.
 
-Avoid block comments inline with code, as the code should be as self-documenting as possible. *Exception: This does not apply to those comments used to generate documentation.*
+Avoid block comments inline with code, as the code should be as self-documenting as possible. *Exception: This does not apply to those comments used to generate documentation.
 
+If you are developing a framework or reusable component, it is preferable to add the Xcode Markdown style comments to public 
+ functions and classes. This enables the Quick Help functionality for other developers, which can be helpful during integration 
+ of frameworks. Either the triple slash ```///``` style comments or the ```\/\*\*``` comment styles can be used for the block comments,
+ but the triple slash is generally preferred as this is the style Xcode uses in the "Add Documentation" command that can be 
+ found under Editor -> Structure -> Add Documentation
+*/
+
+class Record {
+    /// Decodes a JSON payload from the API into the corresponding Record model object. The JSON
+    /// payload must contain the following keys: name, birthDate, age.
+    ///
+    /// - parameter json: JSON payload from the /records endpoint
+    ///
+    /// - throws: MissingKeyException on a missing required key
+    ///
+    /// - returns: the JSON populated Record object
+    public static func decode(json: AnyObject) throws -> Record {
+        return Record()
+    }
+}
+
+/*:
+Care should be taken to make the comments meaningful and add additional information or clarity than what can be inferred
+by the function declaration. Additional documentation on the Markdown style can be found [here](https://developer.apple.com/library/content/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html#//apple_ref/doc/uid/TP40016497-CH2-SW1).
 
 ## Classes and Structures
 
@@ -528,6 +553,20 @@ let newValues = numbers
     .map {$0 + 10}
 
 /*:
+ Empty closures should be defined using the ```() -> Void``` declaration.
+
+ -**Preferred:**
+*/
+
+func performInBackground(activity: @escaping () -> Void) {}
+
+//: **Not Preferred:**
+
+func performInBackground2(activity: @escaping () -> ()) {}
+
+func performInBackground3(activity: @escaping (Void) -> Void) {}
+
+/*:
 ## Types
 
 Always use Swift's native types when available. Swift offers bridging to Objective-C so you can still use the full set of methods as needed.
@@ -678,9 +717,9 @@ class MyLocationManager: NSObject, CLLocationManagerDelegate {
 - `[unowned self]` is not required here. A retain cycle is not created.
 - Location manager has a side-effect for popping up UI to ask the user for permission so fine grain control makes sense here.
 
-### OptionSetTypes
+### OptionSets
 
-When using OptionSetTypes, signify the "no" option using an empty array literal rather than the rawValue initializer. For example, given:
+When using OptionSets, signify the "no" option using an empty array literal rather than the rawValue initializer. For example, given:
 */
 struct PackagingOptions : OptionSet {
     let rawValue: Int
@@ -892,6 +931,25 @@ while i < attendeeList.count {
     i += 1
 }
 
+/*:
+## Third Party Imports
+
+Third party libraries that have yet to annotate their Objective-C headers for nullability will be imported into Swift with implicitly unwrapped optionals. These should be treated as optionals and guarded on use as any other optional parameter. For example, an Objective-C class imported into Swift might look like:
+ */
+
+open class ThirdPartyDelegate : NSObject {
+    open func onError(errorInfo: NSError!) {}
+ }
+
+//: An overriding subclass should instead treat implicitly unwrapped optional parameters as optionals.
+
+open class MyDelegate: ThirdPartyDelegate {
+    override open func onError(errorInfo: NSError?) {
+        print("[ERROR] ThirdPartyDelegate: \(errorInfo?.code)")
+    }
+}
+
+//: Specifically, the imported type ```ErrorInfo!``` has been changed to ```ErrorInfo?```
 /*:
 ## Golden Path
 
