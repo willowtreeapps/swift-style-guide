@@ -13,6 +13,7 @@
   * [Language](#language)
 * [Code Organization](#code-organization)
   * [Protocol Conformance](#protocol-conformance)
+  * [Variable Binding](#variable-binding)
   * [Unused Code](#unused-code)
   * [Minimal Imports](#minimal-imports)
 * [Spacing](#spacing)
@@ -239,6 +240,54 @@ class MyViewController: UIViewController, UITableViewDataSource, UIScrollViewDel
 Since the compiler does not allow you to re-declare protocol conformance in a derived class, it is not always required to replicate the extension groups of the base class. This is especially true if the derived class is a terminal class and a small number of methods are being overridden. When to preserve the extension groups is left to the discretion of the author.
 
 For UIKit view controllers, consider grouping lifecycle, custom accessors, and IBAction in separate class extensions.
+
+### Variable Binding
+
+###Introducers
+Variable binding introducers should be placed next to the variable being bound to clarify what associated values are being bound.
+
+**Preferred**
+```swift
+enum Foo {
+  case bar
+  case baz(Bool)
+  case fred(Bool)
+}
+
+[...]
+case (.bar, .baz(let quux)):
+    // do stuff with quux
+
+[...]
+case (.bar, .baz(let quux), .fred(var corge)):
+    // do stuff with quux and corge
+```
+
+**Not Preferred:**
+```swift
+[...]
+case let (.bar, .baz(quux)):
+  // do stuff with quux
+
+[...]
+case let (.bar, .baz(quux), .fred(corge))
+  // do stuff with quux and corge
+```
+
+###Labels
+When binding variables to associated values of custom types, a label can be omitted. However, for Foundation types or in cases that are generic enough to need more clarity, a label should be used.
+
+**Preferred**
+```swift
+case authenticated(User):
+[...]
+case authenticated(username: String):
+```
+
+**Not Preferred**
+```swift
+case authenticated(u):
+```
 
 ### Unused Code
 
