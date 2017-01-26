@@ -739,6 +739,7 @@ let message = "Click the button"
 let currentBounds = computeViewBounds()
 var names = ["Mic", "Sam", "Christine"]
 let maximumWidth: CGFloat = 106.5
+let options: Colors = [.red, .white, .blue]
 ```
 
 **Not Preferred:**
@@ -747,6 +748,7 @@ let message: String = "Click the button"
 let currentBounds: CGRect = computeViewBounds()
 var names: [String] = ["Mic", "Sam", "Christine"]
 let maximumWidth = CGFloat(106.5)
+let options = [Colors.red, Colors.white, Colors.blue]
 ```
 
 #### Type Annotation for Empty Arrays and Dictionaries
