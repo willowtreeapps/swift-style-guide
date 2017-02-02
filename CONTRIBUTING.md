@@ -8,4 +8,5 @@ one version is clearer than another.
 
 This styleguide is generated from the SwiftStyleGuide.playground file. All changes to
 the guide should originate there. Before submitting a PR, please run the ```generate_readme```
-script which will convert the playground into the README.md file used by github.
+script which will convert the playground into the README.md file used by github. Both the 
+playground and the README should be committed and part of the pull request.
