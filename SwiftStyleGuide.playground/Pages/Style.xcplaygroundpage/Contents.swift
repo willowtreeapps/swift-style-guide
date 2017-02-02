@@ -825,12 +825,14 @@ let message = "Click the button"
 let currentBounds = computeViewBounds()
 var names = ["Mic", "Sam", "Christine"]
 let maximumWidth: CGFloat = 106.5
+let mycolors: [UIColor] = [.red, .white, .blue]
 
 //: **Not Preferred:**
 let unpreferredMessage: String = "Click the button"
 let unpreferredCurrentBounds: CGRect = computeViewBounds()
 var unpreferredNames: [String] = ["Mic", "Sam", "Christine"]
 let unpreferredMaximumWidth = CGFloat(106.5)
+let unpreferredColors = [UIColor.red, UIColor.white, UIColor.blue]
 
 /*:
 #### Type Annotation for Empty Arrays and Dictionaries

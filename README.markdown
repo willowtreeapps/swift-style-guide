@@ -14,16 +14,10 @@
      * [Class Prefixes](#class-prefixes)
      * [Language](#language)
 * [Code Organization](#code-organization)
-<<<<<<< HEAD
-  * [Protocol Conformance](#protocol-conformance)
-  * [Variable Binding](#variable-binding)
-  * [Unused Code](#unused-code)
-  * [Minimal Imports](#minimal-imports)
-=======
      * [Protocol Conformance](#protocol-conformance)
+     * [Variable Binding](#variable-binding)
      * [Unused Code](#unused-code)
      * [Minimal Imports](#minimal-imports)
->>>>>>> 60fa04c... Create playground for the swift styleguide
 * [Spacing](#spacing)
 * [Comments](#comments)
 * [Classes and Structures](#classes-and-structures)
@@ -285,53 +279,82 @@ class MyViewControllerNotPreferred: UIViewController, UITableViewDataSource, UIS
 Since the compiler does not allow you to re-declare protocol conformance in a derived class, it is not always required to replicate the extension groups of the base class. This is especially true if the derived class is a terminal class and a small number of methods are being overridden. When to preserve the extension groups is left to the discretion of the author.
 
 For UIKit view controllers, consider grouping lifecycle, custom accessors, and IBAction in separate class extensions.
-
+ 
 ### Variable Binding
 
-###Introducers
+#### Introducers
 Variable binding introducers should be placed next to the variable being bound to clarify what associated values are being bound.
 
 **Preferred**
+ 
 ```swift
 enum Foo {
-  case bar
-  case baz(Bool)
-  case fred(Bool)
+    case bar
+    case baz(Bool)
+    case fred(Bool)
 }
 
-[...]
+let firstSwitch = (Foo.bar, Foo.baz(false))
+
+switch firstSwitch {
 case (.bar, .baz(let quux)):
     // do stuff with quux
+    break
+default:
+    break
+}
 
-[...]
+let secondSwitch = (Foo.bar, Foo.baz(false), Foo.fred(true))
+
+switch secondSwitch {
 case (.bar, .baz(let quux), .fred(var corge)):
-    // do stuff with quux and corge
+    break
+default:
+    break
+}
+
+
 ```
 
-**Not Preferred:**
+ **Not Preferred:**
+ 
 ```swift
-[...]
+switch firstSwitch {
 case let (.bar, .baz(quux)):
-  // do stuff with quux
+    // do stuff with quux
+    break
+default:
+    break
+}
 
-[...]
-case let (.bar, .baz(quux), .fred(corge))
-  // do stuff with quux and corge
+switch secondSwitch {
+case let (.bar, .baz(quux), .fred(corge)):
+    break
+default:
+    break
+}
+
 ```
 
-###Labels
-When binding variables to associated values of custom types, a label can be omitted. However, for Foundation types or in cases that are generic enough to need more clarity, a label should be used.
+ ### Labels
+ When binding variables to associated values of custom types, a label can be omitted. However, for Foundation types or in cases that are generic enough to need more clarity, a label should be used.
 
-**Preferred**
+ **Preferred**
+ 
+
 ```swift
-case authenticated(User):
-[...]
-case authenticated(username: String):
+ //case authenticated(User):
+
+ //[...]
+ //case authenticated(username: String):
+
 ```
 
-**Not Preferred**
+ **Not Preferred**
+ 
 ```swift
-case authenticated(u):
+ //case authenticated(u):
+
 ```
 
 ### Unused Code
@@ -915,28 +938,17 @@ let message = "Click the button"
 let currentBounds = computeViewBounds()
 var names = ["Mic", "Sam", "Christine"]
 let maximumWidth: CGFloat = 106.5
-<<<<<<< HEAD
-let options: Colors = [.red, .white, .blue]
-```
-=======
->>>>>>> 60fa04c... Create playground for the swift styleguide
+let mycolors: [UIColor] = [.red, .white, .blue]
 
 ```
 **Not Preferred:**
 ```swift
-<<<<<<< HEAD
-let message: String = "Click the button"
-let currentBounds: CGRect = computeViewBounds()
-var names: [String] = ["Mic", "Sam", "Christine"]
-let maximumWidth = CGFloat(106.5)
-let options = [Colors.red, Colors.white, Colors.blue]
-=======
 let unpreferredMessage: String = "Click the button"
 let unpreferredCurrentBounds: CGRect = computeViewBounds()
 var unpreferredNames: [String] = ["Mic", "Sam", "Christine"]
 let unpreferredMaximumWidth = CGFloat(106.5)
+let unpreferredColors = [UIColor.red, UIColor.white, UIColor.blue]
 
->>>>>>> 60fa04c... Create playground for the swift styleguide
 ```
 
 #### Type Annotation for Empty Arrays and Dictionaries
