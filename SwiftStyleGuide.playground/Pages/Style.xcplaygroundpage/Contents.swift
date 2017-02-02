@@ -15,6 +15,7 @@
      * [Language](#language)
 * [Code Organization](#code-organization)
      * [Protocol Conformance](#protocol-conformance)
+     * [Variable Binding](#variable-binding)
      * [Unused Code](#unused-code)
      * [Minimal Imports](#minimal-imports)
 * [Spacing](#spacing)
@@ -246,7 +247,76 @@ class MyViewControllerNotPreferred: UIViewController, UITableViewDataSource, UIS
 Since the compiler does not allow you to re-declare protocol conformance in a derived class, it is not always required to replicate the extension groups of the base class. This is especially true if the derived class is a terminal class and a small number of methods are being overridden. When to preserve the extension groups is left to the discretion of the author.
 
 For UIKit view controllers, consider grouping lifecycle, custom accessors, and IBAction in separate class extensions.
+ 
+### Variable Binding
 
+#### Introducers
+Variable binding introducers should be placed next to the variable being bound to clarify what associated values are being bound.
+
+**Preferred**
+ */
+enum Foo {
+    case bar
+    case baz(Bool)
+    case fred(Bool)
+}
+
+let firstSwitch = (Foo.bar, Foo.baz(false))
+
+switch firstSwitch {
+case (.bar, .baz(let quux)):
+    // do stuff with quux
+    break
+default:
+    break
+}
+
+let secondSwitch = (Foo.bar, Foo.baz(false), Foo.fred(true))
+
+switch secondSwitch {
+case (.bar, .baz(let quux), .fred(var corge)):
+    break
+default:
+    break
+}
+
+
+/*:
+ **Not Preferred:**
+ */
+switch firstSwitch {
+case let (.bar, .baz(quux)):
+    // do stuff with quux
+    break
+default:
+    break
+}
+
+switch secondSwitch {
+case let (.bar, .baz(quux), .fred(corge)):
+    break
+default:
+    break
+}
+
+/*:
+ ### Labels
+ When binding variables to associated values of custom types, a label can be omitted. However, for Foundation types or in cases that are generic enough to need more clarity, a label should be used.
+
+ **Preferred**
+ */
+
+ //case authenticated(User):
+
+ //[...]
+ //case authenticated(username: String):
+
+/*:
+ **Not Preferred**
+ */
+ //case authenticated(u):
+
+/*:
 ### Unused Code
 
 Unused (dead) code, including Xcode template code and placeholder comments should be removed.
