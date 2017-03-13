@@ -1,0 +1,2 @@
+#!/bin/sh
+swift playdown/Playdown.swift SwiftStyleGuide.playground/Pages/Style.xcplaygroundpage/Contents.swift > README.markdown
