@@ -47,6 +47,7 @@
      * [Failing Guards](#failing-guards)
 * [Semicolons](#semicolons)
 * [Parentheses](#parentheses)
+* [Nested Arguments and Elements](#nested-arguments-and-elements)
 * [Copyright Statement](#copyright-statement)
 * [Credits](#credits)
 
@@ -571,6 +572,37 @@ func reticulateSplines(spline: [Double], adjustmentFactor: Double,
     // reticulate code goes here
     return true
 }
+
+/*:
+ For functions with very long signatures, you can place each parameter on its own line with normal indentation to improve readability:
+ */
+
+func reticulateSplines(
+    spline: [Double],
+    adjustmentFactor: Double,
+    translateConstant: Int,
+    rollTransform: Double,
+    pitchTransform: Double,
+    yawTransform: Double,
+    comment: String
+) -> Bool {
+    // reticulate code goes here
+    return true
+}
+
+/*:
+ Similarly, you can improve readability at the call site of functions with very long signatures by placing each parameter on its own line. You can conserve horizontal space on each line by only indenting by one extra tab:
+ */
+
+let areSplinesReticulated = reticulateSplines(
+    spline: [1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9],
+    adjustmentFactor: 6.2832,
+    translateConstant: 42,
+    rollTransform: 1.5708,
+    pitchTransform: 4.7124,
+    yawTransform: 0.3927,
+    comment: "Reticulating splines..."
+)
 
 /*:
 ## Closure Expressions
@@ -1130,6 +1162,51 @@ if name == "Hello" {
 if (name == "Hello") {
     print("World")
 }
+
+/*:
+ ## Nested Arguments and Elements
+
+ Nested arguments and elements, such as can occur at function callsites or within container definitions, can make for difficult to read code. For such statements, consider using the following strategy. Add a newline after each opening parenthesis, bracket, or brace, and place each argument or element on its own line. Use indentation to indicate association with each level of the containing function calls or containers.
+ */
+
+struct CellViewModel {
+    let title: String
+    let detail: String
+    let showDisclosureIndicator: Bool
+}
+
+struct SectionViewModel {
+    let title: String
+    let dataSource: [CellViewModel]
+}
+
+/*
+ **Preferred:**
+ */
+
+
+let firstSection = SectionViewModel(
+    title: "Splines",
+    dataSource: [
+        CellViewModel(
+            title: "Foo",
+            detail: "Reticulated",
+            showDisclosureIndicator: true
+        ),
+        CellViewModel(
+            title: "Bar",
+            detail: "Unreticulated",
+            showDisclosureIndicator: false
+        )
+    ]
+)
+
+//: **Not Preferred:**
+let secondSection = SectionViewModel(title: "Splines",
+                                     dataSource: [CellViewModel(title: "Foo", detail: "Reticulated",
+                                                                showDisclosureIndicator: true),
+                                                  CellViewModel(title: "Bar",detail: "Unreticulated",
+                                                                showDisclosureIndicator: false)])
 
 /*:
 ## Storyboards
