@@ -1332,7 +1332,7 @@ if (name == "Hello") {
 
  ## Nested Arguments and Elements
 
- Nested arguments and elements, such as can occur at function callsites or within container definitions, can make for difficult to read code. For such statements, you can use the following strategy. Add a newline after each opening parenthesis, bracket, or brace, and place each argument or element on its own line. Use indentation to indicate association with each level of the containing function calls or containers. Consider declaring instances of the following view models: 
+ Nested arguments and elements, such as can occur at function callsites or within container definitions, can make for difficult to read code. For such statements, you can use the following strategy. Add a newline after each opening parenthesis, bracket, or brace, and place each argument or element on its own line. Use indentation to indicate association with each level of the containing function calls or containers. Consider the following view models: 
  
 
 ```swift
