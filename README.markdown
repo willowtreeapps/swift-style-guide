@@ -19,6 +19,7 @@
      * [Unused Code](#unused-code)
      * [Minimal Imports](#minimal-imports)
 * [Spacing](#spacing)
+    * [Colons](#colons)
 * [Comments](#comments)
 * [Classes and Structures](#classes-and-structures)
      * [Use of Self](#use-of-self)
@@ -434,25 +435,60 @@ if let user = User.loggedInUser()
 
 ```
 
-
 * There should be exactly one blank line between methods to aid in visual clarity and organization. Whitespace within methods should separate functionality, but having too many sections in a method often means you should refactor into several methods.
 
-* Colons always have no space on the left and one space on the right. Exceptions are the ternary operator `? :` and empty dictionary `[:]`.
+### Colons
+
+* Colons have a space on both sides, like `A : B`, when they join two of the same kind of thing.
+    * Two types
+    * Two expressions
+* Colons have just one space on the right, like `foo: Foo`, when joining different things.
+    * A symbol and its type
+    * An argument label and its expression
+* The empty dictionary literal `[:]` omits spaces.
 
 **Preferred:**
  
 ```swift
-class TestDatabase: Database {
-    var data: [String: CGFloat] = ["A": 1.2, "B": 3.2]
-}
+let littlePigCount: UInt
 
+func destroy(_ house: House)
+
+let catNeedsToenailsClipped: [Quadruped.Leg : Bool] = [
+    .leftFore : false,
+    .rightFore : false,
+    .leftHind : true,
+    .rightHind : true
+]
+
+let catIsGrumpy = catIsAwake ? 0 < kibbleCount : false
+
+class Dog<FavoriteToy : Squeaky> : Pet {
+
+    func bark(at: FavoriteToy) {…}
+
+}
 ```
 **Not Preferred:**
 ```swift
-class TestDatabaseNotPreferred : Database {
-    var data :[String:CGFloat] = ["A" : 1.2, "B":3.2]
-}
+let littlePigCount : UInt
 
+func destroy(_ house:House)
+
+let catNeedsToenailsClipped:[Quadruped.Leg: Bool] = [
+    .leftFore: false,
+    .rightFore: false,
+    .leftHind: true,
+    .rightHind: true
+]
+
+let catIsGrumpy = catIsAwake ? 0 < kibbleCount: false
+
+class Dog<FavoriteToy: Squeaky>: Pet {
+
+    func bark(at : FavoriteToy) {…}
+
+}
 ```
 
 ## Comments
