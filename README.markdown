@@ -640,6 +640,28 @@ func reticulateSplines(spline: [Double], adjustmentFactor: Double,
 
 ```
 
+Since [SE-0091](https://github.com/apple/swift-evolution/blob/master/proposals/0091-improving-operators-in-protocols.md), where applicable, declare an operator function as a static function within the type it is relevant to.
+
+**Preferred:**
+```swift
+struct Foo: Equatable {
+
+  static func ==(lhs: Foo, rhs: Foo) -> Bool {
+    // equating code goes here
+  }
+
+}
+```
+
+**Not Preferred:**
+```swift
+struct Foo: Equatable {}
+
+func ==(lhs: Foo, rhs: Foo) -> Bool {
+  // equating code goes here
+}
+```
+
 ## Closure Expressions
 
 Use trailing closure syntax only if there's a single closure expression parameter at the end of the argument list. Give the closure parameters descriptive names.
